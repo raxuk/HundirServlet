@@ -70,9 +70,11 @@ public class Partida {
 		if(misDisparos[f][c]==false)
 			misDisparos[f][c]=true;
 		if (mar[f][c] < 0) { // Comprobamos si hay agua, tocado o hundido
+			disparos++;
 			return mar[f][c];
 		}
 		if (mar[f][c] >= 0) { // Si hay barco
+			disparos++;
 			int idBarco = mar[f][c];
 			mar[f][c] = TOCADO;
 			if (barcos.get(idBarco).tocaBarco()) { // Si el barco se hunde
@@ -272,11 +274,7 @@ public class Partida {
 	 * @param tamañoMatrizDisparos Tamaño matriz cuadrada
 	 */
 	private void iniciaDisparos(int tamañoMatrizDisparos) {
-		for (int i = 0; i < tamañoMatrizDisparos; i++) {
-			for (int j = 0; j < tamañoMatrizDisparos; j++) {
-				misDisparos[i][j] = false;
-			}
-		}
+		misDisparos = new boolean[tamañoMatrizDisparos][tamañoMatrizDisparos];
 	}
 
 	/**
@@ -321,6 +319,22 @@ public class Partida {
 	 */
 	public int getBarcosInicial(){
 		return numBarcos;
+	}
+	
+	/**
+	 * Devuelve el numero de filas
+	 * @return
+	 */
+	public int getnumFilas(){
+		return numFilas;
+	}
+	
+	/**
+	 * Devuelve el numero de columnas
+	 * @return
+	 */
+	public int getNumCol(){
+		return numColumnas;
 	}
 	
 } // end class Partida

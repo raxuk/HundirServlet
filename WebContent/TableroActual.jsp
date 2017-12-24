@@ -40,114 +40,36 @@ h1 {
 			<tr>
 				<th></th>
 				<%
-					String l = "A";
-					while (l != "I") {
+					char l = 'A';
+					while (l != 'I') {
 						out.println("<th>" + l + "</th>");
-						l += 1;
+						l++;
 					}
 				%>
 			</tr>
 			<%
-				for (int i = 0; i < 8; i++) {
+				for (int i = 0; i < partida.getnumFilas(); i++) {
 					out.println("<tr>");
 					out.println("<td>" + (i + 1) + "</td>");
-					for (int j = 0; j < 8; j++) {
+					for (int j = 0; j < partida.getNumCol(); j++) {
 						String color;
 						int casilla = partida.getCasilla(i, j);
-						if(casilla==partida.AGUA){
+						if(casilla==partida.AGUA && partida.casillaDisparada(i, j))
 							color = "blue";
-						}
+						else 
+							if(casilla==partida.HUNDIDO && partida.casillaDisparada(i, j))
+							color = "red";
+							else
+								if(casilla==partida.TOCADO && partida.casillaDisparada(i, j))
+									color = "orange";
+								else
+									color = "white";
+						//
+						out.println("<td bgcolor=\""+color+"\"><input type =\"radio\" name=\"boton\" value=\""+i+"#"+j+"\"></td>");		
 					}
+					out.println("<\tr>");
 				}
 			%>
-			<tr>
-				<td>1</td>
-				<td bgcolor="blue"><input type="radio" name="tocar" value="1#A"></td>
-				<td><input type="radio" name="tocar" value="1#B"></td>
-				<td><input type="radio" name="tocar" value="1#C"></td>
-				<td><input type="radio" name="tocar" value="1#D"></td>
-				<td><input type="radio" name="tocar" value="1#E"></td>
-				<td><input type="radio" name="tocar" value="1#F"></td>
-				<td><input type="radio" name="tocar" value="1#G"></td>
-				<td><input type="radio" name="tocar" value="1#H"></td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td><input type="radio" name="tocar" value="1#A"></td>
-				<td><input type="radio" name="tocar" value="1#B"></td>
-				<td><input type="radio" name="tocar" value="1#C"></td>
-				<td><input type="radio" name="tocar" value="1#D"></td>
-				<td><input type="radio" name="tocar" value="1#E"></td>
-				<td><input type="radio" name="tocar" value="1#F"></td>
-				<td><input type="radio" name="tocar" value="1#G"></td>
-				<td><input type="radio" name="tocar" value="1#H"></td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td><input type="radio" name="tocar" value="1#A"></td>
-				<td><input type="radio" name="tocar" value="1#B"></td>
-				<td><input type="radio" name="tocar" value="1#C"></td>
-				<td><input type="radio" name="tocar" value="1#D"></td>
-				<td><input type="radio" name="tocar" value="1#E"></td>
-				<td><input type="radio" name="tocar" value="1#F"></td>
-				<td><input type="radio" name="tocar" value="1#G"></td>
-				<td><input type="radio" name="tocar" value="1#H"></td>
-			</tr>
-			<tr>
-				<td>4</td>
-				<td><input type="radio" name="tocar" value="1#A"></td>
-				<td><input type="radio" name="tocar" value="1#B"></td>
-				<td><input type="radio" name="tocar" value="1#C"></td>
-				<td><input type="radio" name="tocar" value="1#D"></td>
-				<td><input type="radio" name="tocar" value="1#E"></td>
-				<td><input type="radio" name="tocar" value="1#F"></td>
-				<td><input type="radio" name="tocar" value="1#G"></td>
-				<td><input type="radio" name="tocar" value="1#H"></td>
-			</tr>
-			<tr>
-				<td>5</td>
-				<td><input type="radio" name="tocar" value="1#A"></td>
-				<td><input type="radio" name="tocar" value="1#B"></td>
-				<td><input type="radio" name="tocar" value="1#C"></td>
-				<td><input type="radio" name="tocar" value="1#D"></td>
-				<td><input type="radio" name="tocar" value="1#E"></td>
-				<td><input type="radio" name="tocar" value="1#F"></td>
-				<td><input type="radio" name="tocar" value="1#G"></td>
-				<td><input type="radio" name="tocar" value="1#H"></td>
-			</tr>
-			<tr>
-				<td>6</td>
-				<td><input type="radio" name="tocar" value="1#A"></td>
-				<td><input type="radio" name="tocar" value="1#B"></td>
-				<td><input type="radio" name="tocar" value="1#C"></td>
-				<td><input type="radio" name="tocar" value="1#D"></td>
-				<td><input type="radio" name="tocar" value="1#E"></td>
-				<td><input type="radio" name="tocar" value="1#F"></td>
-				<td><input type="radio" name="tocar" value="1#G"></td>
-				<td><input type="radio" name="tocar" value="1#H"></td>
-			</tr>
-			<tr>
-				<td>7</td>
-				<td><input type="radio" name="tocar" value="1#A"></td>
-				<td><input type="radio" name="tocar" value="1#B"></td>
-				<td><input type="radio" name="tocar" value="1#C"></td>
-				<td><input type="radio" name="tocar" value="1#D"></td>
-				<td><input type="radio" name="tocar" value="1#E"></td>
-				<td><input type="radio" name="tocar" value="1#F"></td>
-				<td><input type="radio" name="tocar" value="1#G"></td>
-				<td><input type="radio" name="tocar" value="1#H"></td>
-			</tr>
-			<tr>
-				<td>8</td>
-				<td><input type="radio" name="tocar" value="1#A"></td>
-				<td><input type="radio" name="tocar" value="1#B"></td>
-				<td><input type="radio" name="tocar" value="1#C"></td>
-				<td><input type="radio" name="tocar" value="1#D"></td>
-				<td><input type="radio" name="tocar" value="1#E"></td>
-				<td><input type="radio" name="tocar" value="1#F"></td>
-				<td><input type="radio" name="tocar" value="1#G"></td>
-				<td><input type="radio" name="tocar" value="1#H"></td>
-			</tr>
 		</table>
 		<table>
 			<tr>
@@ -156,10 +78,10 @@ h1 {
 		</table>
 	</form>
 	<p>
-		<a href="./formulario.html"> Muestra Solución</a>
+		<a href="SolucionPartidaServlet"> Muestra Solución</a>
 	<p>
-		<a href="./formulario.html"> Nueva Partida</a>
+		<a href="NuevaPartidaServlet"> Nueva Partida</a>
 	<p>
-		<a href="./formulario.html"> Salir</a>
+		<a href="SalirPartidaServlet"> Salir</a>
 </body>
 </html>

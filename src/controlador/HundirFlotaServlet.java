@@ -36,19 +36,22 @@ public class HundirFlotaServlet extends HttpServlet {
 		HttpSession sesion = request.getSession(false);
 		Partida partida = null;
 		if (sesion == null) {
-			// sesion = request.getSession(true);
+			sesion = request.getSession();
 			partida = new Partida(8, 8, 6);
 			// sesion.setAttribute("Partida", partida);
 		} else {
 			partida = (Partida) sesion.getAttribute("Partida");
 		}
 		// conseguir posición del boton
-		String[] posicion = request.getParameter("tocar").split("#");
-		partida.pruebaCasilla(Integer.parseInt(posicion[0]), Integer.parseInt(posicion[1]));
+		String posicion = request.getParameter("boton");
+		if (posicion != null) {
+			String[] coor = posicion.split("#");
+			partida.pruebaCasilla(Integer.parseInt(coor[0]), Integer.parseInt(coor[1]));
+		}
 
 		// Guardar partida en la sesión
 		sesion.setAttribute("Partida", partida);
-		//Redirigir la ejecucion al fichero JSP que construira la Vista
+		// Redirigir la ejecucion al fichero JSP que construira la Vista
 		response.sendRedirect("TableroActual.jsp");
 	}
 
