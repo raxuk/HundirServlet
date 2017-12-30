@@ -17,6 +17,13 @@ h1 {
 	font-size: 30px;
 	text-align: center;
 }
+
+table.center {
+	width: 500px;
+	text-align: center;
+	font-weight: bold;
+	align: center;
+}
 </style>
 <title>Hundir la flota</title>
 <body>
@@ -25,57 +32,80 @@ h1 {
 	<%
 		HttpSession sesion = request.getSession();
 		Partida partida = (Partida) sesion.getAttribute("Partida");
-		if (partida.getDisparos() == 0) {
-			out.println("<p>NUEVA PARTIDA</p>");
-		} else {
-			out.println("HOLI");
+		boolean finPartida = false;
+		String textoEstado = "ok";
+		if (partida.getDisparos() == 0)
+			textoEstado = "NUEVA PARTIDA";
+		if (partida.getDisparos() > 0)
+			textoEstado = "Página de resultados del disparo en (" + sesion.getAttribute("disparo") + "): "
+					+ sesion.getAttribute("estado");
+		if (partida.getBarcosQuedan() == 0) {
+			finPartida = true;
+			textoEstado = "GAME OVER";
 		}
-		out.println("<p>Barcos Navegando: " + partida.getBarcosQuedan() + "  Barcos Hundidos: "
-				+ (partida.getBarcosInicial() - partida.getBarcosQuedan()) + "</p>");
-		out.println("Numero de disparos efectuados: " + partida.getDisparos());
 	%>
+	<p><%=textoEstado %></p>
+	<p>Barcos Navegando: <%=partida.getBarcosQuedan() %>
+	<br>Barcos Hundidos: <%=partida.getBarcosInicial()-partida.getBarcosQuedan() %>
+	<br>Número de disparos efectuados: <%=partida.getDisparos() %></p>
+	
 
 	<form action="HundirFlotaServlet" method="get">
-		<table>
+		<table class="center">
 			<tr>
 				<th></th>
 				<%
 					char l = 'A';
 					while (l != 'I') {
-						out.println("<th>" + l + "</th>");
-						l++;
+				%>
+				<th><%=l%></th>
+				<%
+					l++;
+					}
+				%>
+
+
+			</tr>
+			<%
+				for (int i = 0; i < partida.getnumFilas(); i++) {
+			%>
+			<tr>
+				<td><%=(i + 1)%></td>
+				<%
+					for (int j = 0; j < partida.getNumCol(); j++) {
+							String color;
+							int casilla = partida.getCasilla(i, j);
+							if (casilla == Partida.AGUA && partida.casillaDisparada(i, j))
+								color = "blue";
+							else if (casilla == Partida.HUNDIDO && partida.casillaDisparada(i, j))
+								color = "red";
+							else if (casilla == Partida.TOCADO && partida.casillaDisparada(i, j))
+								color = "orange";
+							else
+								color = "white";
+				%>
+				<td bgcolor="<%=color%>"><input type="radio" name="boton"
+					value="<%=i%>#<%=j%>"></td>
+				<%
 					}
 				%>
 			</tr>
 			<%
-				for (int i = 0; i < partida.getnumFilas(); i++) {
-					out.println("<tr>");
-					out.println("<td>" + (i + 1) + "</td>");
-					for (int j = 0; j < partida.getNumCol(); j++) {
-						String color;
-						int casilla = partida.getCasilla(i, j);
-						if(casilla==partida.AGUA && partida.casillaDisparada(i, j))
-							color = "blue";
-						else 
-							if(casilla==partida.HUNDIDO && partida.casillaDisparada(i, j))
-							color = "red";
-							else
-								if(casilla==partida.TOCADO && partida.casillaDisparada(i, j))
-									color = "orange";
-								else
-									color = "white";
-						//
-						out.println("<td bgcolor=\""+color+"\"><input type =\"radio\" name=\"boton\" value=\""+i+"#"+j+"\"></td>");		
-					}
-					out.println("<\tr>");
 				}
 			%>
+
 		</table>
-		<table>
+		<%
+			if (!finPartida) {
+		%>
+		<table class="center">
 			<tr>
 				<td><input type="submit" value="Enviar"></td>
 			</tr>
 		</table>
+		<%
+			}
+		%>
 	</form>
 	<p>
 		<a href="SolucionPartidaServlet"> Muestra Solución</a>

@@ -20,7 +20,6 @@ public class NuevaPartidaServlet extends HttpServlet {
      */
     public NuevaPartidaServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

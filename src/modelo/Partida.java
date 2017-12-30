@@ -18,7 +18,6 @@ public class Partida {
 	private int numFilas, // numero de filas del tablero
 			numColumnas; // numero de columnas del tablero
 	private Vector<Barco> barcos = null; // vector dinamico de barcos
-	@SuppressWarnings("unused")
 	private int numBarcos, // numero de barcos de la partida
 			quedan, // numero de barcos no hundidos
 			disparos; // numero de disparos efectuados
@@ -68,13 +67,12 @@ public class Partida {
 	 */
 	public int pruebaCasilla(int f, int c) { // Cambia estado casilla y devuelve
 		if(misDisparos[f][c]==false)
+			disparos++;
 			misDisparos[f][c]=true;
 		if (mar[f][c] < 0) { // Comprobamos si hay agua, tocado o hundido
-			disparos++;
 			return mar[f][c];
 		}
 		if (mar[f][c] >= 0) { // Si hay barco
-			disparos++;
 			int idBarco = mar[f][c];
 			mar[f][c] = TOCADO;
 			if (barcos.get(idBarco).tocaBarco()) { // Si el barco se hunde

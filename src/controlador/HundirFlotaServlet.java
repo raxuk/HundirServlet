@@ -46,7 +46,21 @@ public class HundirFlotaServlet extends HttpServlet {
 		String posicion = request.getParameter("boton");
 		if (posicion != null) {
 			String[] coor = posicion.split("#");
-			partida.pruebaCasilla(Integer.parseInt(coor[0]), Integer.parseInt(coor[1]));
+			if (!(partida.casillaDisparada(Integer.parseInt(coor[0]), Integer.parseInt(coor[1])))) {
+				String estado = "ok!";
+				int casilla = partida.pruebaCasilla(Integer.parseInt(coor[0]), Integer.parseInt(coor[1]));
+				if (casilla == Partida.AGUA)
+					estado = "Agua";
+				if (casilla == Partida.TOCADO)
+					estado = "Tocado";
+				if (casilla >= 0)
+					estado = "Hundido";
+				sesion.setAttribute("estado", estado);
+			} else
+				sesion.setAttribute("estado", "Casilla ya disparada");
+
+			sesion.setAttribute("disparo", (Integer.parseInt(coor[0]) + 1) + "#"
+					+ Character.toString((char) (Integer.parseInt(coor[1]) + 65)));
 		}
 
 		// Guardar partida en la sesión

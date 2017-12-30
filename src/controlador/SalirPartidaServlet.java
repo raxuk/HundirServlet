@@ -20,7 +20,6 @@ public class SalirPartidaServlet extends HttpServlet {
      */
     public SalirPartidaServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
