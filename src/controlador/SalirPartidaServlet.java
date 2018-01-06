@@ -1,6 +1,8 @@
 package controlador;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +33,9 @@ public class SalirPartidaServlet extends HttpServlet {
 		partida = new Partida(partida.getnumFilas(), partida.getNumCol(), partida.getBarcosInicial());
 		sesion.setAttribute("Partida", partida);
 
-		response.sendRedirect("index.html");	
+		
+		RequestDispatcher vista = request.getRequestDispatcher("index.html");
+		vista.forward(request, response);
 	}
 
 }

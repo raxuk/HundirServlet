@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +67,8 @@ public class HundirFlotaServlet extends HttpServlet {
 		// Guardar partida en la sesión
 		sesion.setAttribute("Partida", partida);
 		// Redirigir la ejecucion al fichero JSP que construira la Vista
-		response.sendRedirect("TableroActual.jsp");
+		RequestDispatcher vista = request.getRequestDispatcher("TableroActual.jsp");
+		vista.forward(request, response);
 	}
 
 }

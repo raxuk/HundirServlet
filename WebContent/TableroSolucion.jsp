@@ -1,4 +1,5 @@
 <%@page import="modelo.Partida"%>
+<%@ page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -32,17 +33,9 @@ table.center {
 	<%
 		HttpSession sesion = request.getSession();
 		Partida partida = (Partida) sesion.getAttribute("Partida");
+		ArrayList<String> solucion = (ArrayList<String>) sesion.getAttribute("Solucion");
 		boolean finPartida = false;
-		String textoEstado = "ok";
-		if (partida.getDisparos() == 0)
-			textoEstado = "NUEVA PARTIDA";
-		if (partida.getDisparos() > 0)
-			textoEstado = "Página de resultados del disparo en (" + sesion.getAttribute("disparo") + "): "
-					+ sesion.getAttribute("estado");
-		if (partida.getBarcosQuedan() == 0) {
-			finPartida = true;
-			textoEstado = "GAME OVER";
-		}
+		String textoEstado = "Solucion PARTIDA";
 	%>
 	<p><%=textoEstado%></p>
 	<p>
@@ -78,18 +71,14 @@ table.center {
 				<%
 					for (int j = 0; j < partida.getNumCol(); j++) {
 							String color;
-							int casilla = partida.getCasilla(i, j);
-							if (casilla == Partida.AGUA && partida.casillaDisparada(i, j))
-								color = "blue";
-							else if (casilla == Partida.HUNDIDO && partida.casillaDisparada(i, j))
+							color = "blue";
+							String casilla = i + "#" + j;
+							if (solucion.contains(casilla)) {
 								color = "red";
-							else if (casilla == Partida.TOCADO && partida.casillaDisparada(i, j))
-								color = "orange";
-							else
-								color = "white";
+								solucion.remove(casilla);
+							}
 				%>
-				<td bgcolor="<%=color%>"><input type="radio" name="boton"
-					value="<%=i%>#<%=j%>"></td>
+				<td bgcolor="<%=color%>"></td>
 				<%
 					}
 				%>
@@ -99,20 +88,8 @@ table.center {
 			%>
 
 		</table>
-		<%
-			if (!finPartida) {
-		%>
-		<table class="center">
-			<tr>
-				<td><input type="submit" value="Enviar"></td>
-			</tr>
-		</table>
-		<%
-			}
-		%>
+
 	</form>
-	<p>
-		<a href="SolucionPartidaServlet"> Muestra Solución</a>
 	<p>
 		<a href="NuevaPartidaServlet"> Nueva Partida</a>
 	<p>
